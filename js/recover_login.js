@@ -1,7 +1,7 @@
 $(function() 
 {
   //при отправке нажатии на кнопку отправления данных
-  $('#btn_login').click(function(event) 
+  $('#btn_recover_login').click(function(event) 
   {
 	//отменить стандартное действие браузера
 	event.preventDefault();
@@ -11,7 +11,7 @@ $(function()
 	$('#danger-alert').addClass('hidden');	
 	$('#success-alert').addClass('hidden');
 	//перебирает все элементы управления формы (input и textarea) 
-	$('#LoginForm input,textarea').each(function() 
+	$('#LoginRecoverForm input,textarea').each(function() 
 	{
 	  //найти предков, имеющих класс .form-group (для установления success/error)
 	  var formGroup = $(this).parents('.form-group');
@@ -38,11 +38,11 @@ $(function()
 
 	if (formValid) 
 	{	
-		var str = $('#LoginForm').serialize();
+		var str = $('#LoginRecoverForm').serialize();
 
 		$.ajax(
 		{
-			url: "scripts/login.php",
+			url: "scripts/recover_login.php",
 			type: "POST",
 			data: str
 		})
@@ -51,17 +51,9 @@ $(function()
 				// если сервер всё выполнил удачно то
 				if(msg == "success")
 				{
-					window.location.href = "index.php?act=lk";
-				}
-				if(msg == "invalid")
-				{
-					$('#danger-alert').removeClass('hidden');
-				}
-				if(msg == "not_login")
-				{
 					//удалить у элемент, имеющего id msgSubmit, класс hidden
-					$('#login-alert').removeClass('hidden');
-					$('#LoginForm input,textarea').each(function() 
+					$('#success-alert').removeClass('hidden');
+					$('#LoginRecoverForm input,textarea').each(function() 
 					{
 						//найти предков, имеющих класс .form-group (для установления success/error)
 						var formGroup = $(this).parents('.form-group');
@@ -73,11 +65,15 @@ $(function()
 						glyphicon.removeClass('glyphicon-ok');
 					});
 				}
-				if(msg == "status_off")
+				if(msg == "invalid")
+				{
+					$('#danger-alert').removeClass('hidden');
+				}
+				if(msg == "not_login")
 				{
 					//удалить у элемент, имеющего id msgSubmit, класс hidden
-					$('#status_off-alert').removeClass('hidden');
-					$('#LoginForm input,textarea').each(function() 
+					$('#login-alert').removeClass('hidden');
+					$('#LoginRecoverForm input,textarea').each(function() 
 					{
 						//найти предков, имеющих класс .form-group (для установления success/error)
 						var formGroup = $(this).parents('.form-group');
@@ -91,7 +87,5 @@ $(function()
 				}
 			})
 	}
-
-
   });
 });

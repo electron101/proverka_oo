@@ -65,9 +65,9 @@
 	<div class="container">
 
 	<form class="form-signin" role="form" id="LoginForm">
-		<h1 class="text-center form-signin-heading">Аэропорт</h1>
+		<h1 class="text-center form-signin-heading">Личный кабинет</h1>
 		<h5 class="text-center form-signin-heading">
-			ПАНЕЛЬ УПРАВЛЕНИЯ
+			Информационно аналитическая система СНПДОО
 		</h5>
 
 		<div class="alert alert-danger skleit_alert hidden" 
@@ -106,8 +106,6 @@
 
 		<div class="form-group">
 			<a href="index.php?act=recover_login">Восстановить пароль</a>
-			<br>
-			<a href="index.php?act=registry">Зарегистрироваться</a>
 		</div>			
 
 		<button id="btn_login" class="btn btn-lg btn-primary btn-block" 
@@ -116,9 +114,6 @@
 	
 		<br>
 
-		<a class="btn btn-lg btn-success btn-block" href="?act=main" role="button">
-			Заказать билет
-		</a>  
 	</form>
 
 	</div>

@@ -11,93 +11,124 @@ header('content-type text/html charset=utf-8');
 /* Подключаем файл настроек базы данных */
 include_once('connect_bd.php');
 
-$act = isset($_GET['act']) ? $_GET['act'] : 'main';
+$act = isset($_GET['act']) ? $_GET['act'] : 'login';
 
 switch ($act) 
 {
+	case 'lk':
+		require 'template/lk.php'; 
+		break;
+
+	case 'in':
+		require 'template/in.php'; 
+		break;
+
+	case 'out':
+		require 'template/out.php'; 
+		break;
+
+	case 'ticket_list':
+		require 'template/ticket_list.php'; 
+		break;
+
+	case 'print_ticket':
+		require 'template/print_ticket.php'; 
+		break;
+
+	case 'show_ticket':
+		require 'template/show_ticket.php'; 
+		break;
+
+	case 'report_otdel':
+		require "template/report_otdel.php"; 
+		break;
+
+	case 'show_news':
+		require 'template/show_news.php'; 
+		break;
+
+	case 'news':
+		require 'template/news.php'; 
+		break;
+
+	case 'news_add':
+		require 'template/news_add.php'; 
+		break;
+
+	case 'news_edit':
+		require 'template/news_edit.php'; 
+		break;
+
+	case 'user':
+		require 'template/user.php'; 
+		break;
+
+	case 'otdel':
+		require 'template/otdel.php'; 
+		break;
+
+	case 'otdel_add':
+		require 'template/otdel_add.php'; 
+		break;
+
+	case 'otdel_edit':
+		require 'template/otdel_edit.php'; 
+		break;
+
+	case 'doljn':
+		require 'template/doljn.php'; 
+		break;
+
+	case 'doljn_add':
+		require 'template/doljn_add.php'; 
+		break;
+
+	case 'doljn_edit':
+		require 'template/doljn_edit.php'; 
+		break;
+
+	case 'client':
+		require 'template/client.php'; 
+		break;
+
+	case 'client_add':
+		require 'template/client_add.php'; 
+		break;
+
+	case 'client_edit':
+		require 'template/client_edit.php'; 
+		break;
+
+	case 'ticket_add':
+		require 'template/ticket_add.php'; 
+		break;
+
+	case 'recover_login':
+		require 'template/recover_login.php'; 
+		break;
+
 	case 'login':
-		require 'templates/login.php';
-		break;
-	
-	case 'registry':
-		require 'templates/registry.php';
-		break;
-	
-	case 'main':
-		require 'templates/main.php';
-		break;
-	
-	case 'admin':
-		require 'templates/admin.php';
-		break;
-	
-	case 'gorod':
-		require 'templates/gorod.php';
-		break;
-	
-	case 'gorod_add':
-		require 'templates/gorod_add.php';
-		break;
-	
-	case 'gorod_edit':
-		require 'templates/gorod_edit.php';
-		break;
-	
-	case 'samolet':
-		require 'templates/samolet.php';
-		break;
-	
-	case 'samolet_add':
-		require 'templates/samolet_add.php';
+		/* если уже зареган то на страницу 
+		входа уже не преходим, только в 
+		личный кабинет, если же не зареган
+		то на страницу входа */
+		if (isset($_SESSION['id_user']))
+			require 'template/lk.php';
+		else
+			require 'template/login.php'; 
 		break;
 
-	case 'samolet_edit':
-		require 'templates/samolet_edit.php';
-		break;
-	
-	case 'reis':
-		require 'templates/reis.php';
-		break;
-	
-	case 'reis_add':
-		require 'templates/reis_add.php';
+	case 'user_add':
+		require 'template/user_add.php'; 
 		break;
 
-	case 'reis_edit':
-		require 'templates/reis_edit.php';
-		break;
-	
-	case 'class':
-		require 'templates/class.php';
-		break;
-	
-	case 'class_add':
-		require 'templates/class_add.php';
+	case 'user_edit':
+		require 'template/user_edit.php'; 
 		break;
 
-	case 'class_edit':
-		require 'templates/class_edit.php';
-		break;
-
-	case 'stoimost':
-		require 'templates/stoimost.php';
-		break;
-	
-	case 'stoimost_add':
-		require 'templates/stoimost_add.php';
-		break;
-
-	case 'stoimost_edit':
-		require 'templates/stoimost_edit.php';
-		break;
-
-	case 'passajir':
-		require 'templates/passajir.php';
-		break;
-	
-	case 'oplata_karta':
-		require 'templates/oplata_karta.php';
-		break;
+	case 'smena_pw':
+		require 'template/smena_pw.php'; 
+		break;			
 
 	case 'logout':		
 		unset($_SESSION['id_user']);
@@ -108,7 +139,7 @@ switch ($act)
 		break;
 	
 	default:
-		require 'templates/main.php';
+		//require 'template/login.php';
 		break;
 }
 ?>

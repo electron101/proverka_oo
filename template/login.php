@@ -11,8 +11,9 @@
 	<meta name="author" content="">
 	<link rel="icon" href="../../favicon.ico">
 
-	<title>Аэропорт</title>
+	<title>Информационно аналитическая система СНПДОО</title>
 
+			
 	<link href="bootstrap/css/bootstrap.css" rel="stylesheet">
 	<link href="css/signin.css" rel="stylesheet">
     <link rel="stylesheet" href="font-awesome/css/font-awesome.min.css">
@@ -65,7 +66,7 @@
 	<div class="container">
 
 	<form class="form-signin" role="form" id="LoginForm">
-		<h1 class="text-center form-signin-heading">Личный кабинет</h1>
+		<h2 class="text-center form-signin-heading">Личный кабинет</h2>
 		<h5 class="text-center form-signin-heading">
 			Информационно аналитическая система СНПДОО
 		</h5>

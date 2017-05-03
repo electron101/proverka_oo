@@ -113,12 +113,12 @@
 			
 			<div class="collapse navbar-collapse">
 				<ul class="nav navbar-nav navbar-left nav_admin_left_margin">            
-					<li>
-						<a href="?act=admin" class="pull-left" >
-							<span class="glyphicon glyphicon-log-out" aria-hidden="true">
-							</span> Авиабилеты (Панель администратора)
-						</a>
-					</li>
+					<!-- <li> -->
+					<!-- 	<a href="?act=admin" class="pull&#45;left" > -->
+					<!-- 		<span class="glyphicon glyphicon&#45;log&#45;out" aria&#45;hidden="true"> -->
+					<!-- 		</span> Авиабилеты (Панель администратора) -->
+					<!-- 	</a> -->
+					<!-- </li> -->
 				</ul>
 				
 				<ul class="nav navbar-nav navbar-right ">            
@@ -178,7 +178,7 @@
             <ul class="sidebar-menu">
 
 				<li class="active"> 
-					<a href="?act=bilet"> <i class="fa fa-home"></i> Билеты </a>
+					<a href="?act=user"> <i class="fa fa-users"></i> Пользователи </a>
                 </li>                
    
 				<li>

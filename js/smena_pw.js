@@ -1,14 +1,15 @@
 $(function() 
 {
   //при отправке нажатии на кнопку отправления данных
-  $('#btn_add').click(function(event) 
+  $('#btn_pw').click(function(event) 
   {
 	//отменить стандартное действие браузера
 	event.preventDefault();
 	//завести переменную, которая будет говорить о том валидная форма или нет
 	var formValid = true;
+	$('#pw-alert').addClass('hidden');
 	//перебирает все элементы управления формы (input и textarea) 
-	$('#ReisAddForm input,textarea').each(function() 
+	$('#PwForm input,textarea').each(function() 
 	{
 	  //найти предков, имеющих класс .form-group (для установления success/error)
 	  var formGroup = $(this).parents('.form-group');
@@ -30,62 +31,43 @@ $(function()
 		glyphicon.addClass('glyphicon-remove').removeClass('glyphicon-ok');
 		//если элемент не прошёл проверку, то отметить форму как не валидную 
 		formValid = false;  
-	  }	  
-	  
-	  var gorod_vilet   = $("#gorod_vilet").val();
-	  var gorod_posadka = $("#gorod_posadka").val();
-	  var bort_num      = $("#bort_num").val();
+	  }
 
-		if (gorod_vilet == null) 
-		{		
+	  	//проверяем совпадают ли пароли
+		//1. Получаем значение элементов input, содержащих пароли
+		var password = $("#password").val();
+		var password2 = $("#password2").val();
+		//2. Если пароли не совпали то сразу отмечаем 
+		//поля как не валидные (без отправки на сервер)
+		if (password != password2) 
+		{
 			// получаем элемент, содержащий пароль
-			inputclient = $("#gorod_vilet");
+			inputPassword = $("#password");
+			inputPassword2 = $("#password2");
 			//найти предка, имеющего класс .form-group (для установления success/error)
-			formGroupclient = inputclient.parents('.form-group');
+			formGroupPassword = inputPassword.parents('.form-group');
+			formGroupPassword2 = inputPassword2.parents('.form-group');
+			//найти glyphicon (иконка успеха или ошибки)
+			glyphiconPassword = formGroupPassword.find('.form-control-feedback');
+			glyphiconPassword2 = formGroupPassword2.find('.form-control-feedback');
 			//добавить к formGroup класс .has-error и удалить .has-success
-			formGroupclient.addClass('has-error').removeClass('has-success');
-			
+			formGroupPassword.addClass('has-error').removeClass('has-success');
+			formGroupPassword2.addClass('has-error').removeClass('has-success');
+			//добавить к glyphicon класс glyphicon-remove и удалить glyphicon-ok
+			glyphiconPassword.addClass('glyphicon-remove').removeClass('glyphicon-ok');
+			glyphiconPassword2.addClass('glyphicon-remove').removeClass('glyphicon-ok');
 			formValid = false;
-		}  
-		
-		if (gorod_posadka == null) 
-		{		
-			// получаем элемент, содержащий пароль
-			inputclient = $("#gorod_posadka");
-			//найти предка, имеющего класс .form-group (для установления success/error)
-			formGroupclient = inputclient.parents('.form-group');
-			//добавить к formGroup класс .has-error и удалить .has-success
-			formGroupclient.addClass('has-error').removeClass('has-success');
-			
-			formValid = false;
-		}  
-
-		if (bort_num == null) 
-		{		
-			// получаем элемент, содержащий пароль
-			inputuser = $("#bort_num");
-			//найти предка, имеющего класс .form-group (для установления success/error)
-			formGroupuser = inputuser.parents('.form-group');
-			//добавить к formGroup класс .has-error и удалить .has-success
-			formGroupuser.addClass('has-error').removeClass('has-success');
-			
-			formValid = false;
-		}
+		}	  
 	});
 
 	//если форма валидна, то
 	if (formValid) 
 	{	
-		var date_posadka2 = $('#date_posadka').val();
-		// var date_vilet2 = $('#date_vilet').val(moment(new Date($('#date_vilet').val())).format("YYYY-MM-DD HH:mm:ss"));
-		var date_vilet2 = $('#date_vilet').val();
+		var str = $('#PwForm').serialize();
 
-		var str = $('#ReisAddForm').serialize();
-
-		str += "&date_posadka2=" + date_posadka2 + "&date_vilet2=" + date_vilet2;
 		$.ajax(
 		{
-			url: "scripts/reis_add.php",
+			url: "scripts/smena_pw.php",
 			type: "POST",
 			data: str
 		})
@@ -95,7 +77,7 @@ $(function()
 				if(msg == "success")
 				{
 					//скрыть форму
-					$('#ReisAddForm').hide();
+					$('#PwForm').hide();
 					//удалить класс hidden
 					$('#success-alert').removeClass('hidden');
 					$('#success-alert-btn').removeClass('hidden');
@@ -103,10 +85,26 @@ $(function()
 				if(msg == "invalid")
 				{
 					//скрыть форму
-					$('#ReisAddForm').hide();
+					$('#PwForm').hide();
 					//удалить класс hidden
 					$('#danger-alert').removeClass('hidden');
 					$('#success-alert-btn').removeClass('hidden');
+				}
+				if(msg == "pw")
+				{
+					//удалить у элемент, имеющего id login-alert, класс hidden
+					$('#pw-alert').removeClass('hidden');
+					$('#PwForm input,textarea').each(function() 
+					{
+						//найти предков, имеющих класс .form-group (для установления success/error)
+						var formGroup = $(this).parents('.form-group');
+						//найти glyphicon (иконка успеха или ошибки)
+						var glyphicon = formGroup.find('.form-control-feedback');
+						//удалить .has-success
+						formGroup.removeClass('has-success');
+						//удалить glyphicon-ok
+						glyphicon.removeClass('glyphicon-ok');
+					});
 				}
 			})	
 	}

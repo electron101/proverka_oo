@@ -1,6 +1,6 @@
 <?php
 /*
- *	[ ДОБАВЛЕНИЕ ПОЛЬЗОВАТЕЛЯ ]
+ *	[ ОБНОВЛЕНИЕ ПОЛЬЗОВАТЕЛЯ ]
  */
 include_once('../connect_bd.php');
 
@@ -11,12 +11,8 @@ if (!empty($_POST))
 								/****************************
 								 *	ПРОВЕРКА ВХОДНЫХ ДАННЫХ	*
 								 ****************************/
-		 
-		// strip_tags 					- Удаляет HTML и PHP тэги из строки
-		// htmlspecialchars 			- Преобразует специальные символы в HTML сущности 
-		// mysqli_real_escape_string 	- Эта функция используется для создания допустимых 
-		// в SQL строк, которые можно использовать в SQL выражениях. Заданная строка 
-		// кодируется в экранированную SQL строку, используя текущую кодировку
+		
+		$id = $_POST['id'];
 
 		$name = strip_tags($_POST['name']);
 		$name = htmlspecialchars($name);
@@ -33,10 +29,6 @@ if (!empty($_POST))
 		$login = strip_tags($_POST['login']);
 		$login = htmlspecialchars($login);
 		$login = $mysqli->real_escape_string($login);
-
-		$password = strip_tags($_POST['password']);
-		$password = htmlspecialchars($password);
-		$password = $mysqli->real_escape_string($password);
 
 		$email = strip_tags($_POST['email']);
 		$email = htmlspecialchars($email);
@@ -70,9 +62,11 @@ if (!empty($_POST))
 		
 		$status = empty($_POST['status']) ? $status =0 : $status = 1;
 
-		/* Проверим есть ли такой логин в базе */
+		/* Проверим все записи кроме текущей, есть ли такой логин в базе.
+		Кроме текущей для того что бы можно было оставить собсвенный логин
+		без изменений и код не ругался что такой логин уже есть в системе */
 
-		$row = $mysqli->query("SELECT * FROM users WHERE login = '$login'");
+		$row = $mysqli->query("SELECT * FROM users WHERE login = '$login' AND id NOT IN ('$id')");
 
 		if ($row->num_rows != 0) 
 		{
@@ -83,26 +77,30 @@ if (!empty($_POST))
 
 		$row->close();
 
-		/*******************************************************************************************/
-
 								/****************************
 								 *	ПОДГОТОВКА ЗАПРОСА		*
 								 ****************************/
-		
-		if (!($stmt = $mysqli->prepare("INSERT INTO users (name, adres, fio, login, pass, status, priv, email, tel) 
-										VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)")))
+
+		if (!($stmt = $mysqli->prepare("UPDATE users SET name = ?, 
+														 adres = ?, 
+														 fio = ?, 
+														 login = ?, 
+														 status = ?,
+														 priv = ?,
+														 email = ?, 
+														 tel = ?
+														 WHERE id = ?")))
+
 		{
 			echo "invalid";
 			exit();
 		}
 
-		/*******************************************************************************************/
-
 								/****************************
 								 *	ПРИВЯЗКА ДАННЫХ			*
 								 ****************************/
 
-		if (!$stmt->bind_param('sssssiiss', $name, $adres, $fio, $login, sha1($password), $status, $priv, $email, $tel))
+		if (!$stmt->bind_param('ssssiissi', $name, $adres, $fio, $login, $status, $priv, $email, $tel, $id))
 		{
 			echo "invalid";
 			exit();
@@ -127,6 +125,7 @@ if (!empty($_POST))
 
 		/* если всё успешно посылаем серверу success */
 	    echo "success";
+
     } 
     catch (Exception $e) 
     {

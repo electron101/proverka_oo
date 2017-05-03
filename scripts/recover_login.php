@@ -74,17 +74,14 @@ if (!empty($_POST))
 				//шлём пороль на это мыло
 				//mail($email, "Запрос на востонавление пороля", "Здравствуйте $login ваш новый пороль : $string");
 
-
 				$to  = $email;
 				$subject = 'Запрос на востонавление пороля';
 				$message = "Здравствуйте $login ваш новый пороль : $string";
-				$headers = 'From: <proverka_oo_support@nggti.ru>' . "\r\n" .
-				    'Reply-To: <proverka_oo_support@nggti.ru>' . "\r\n" .
+				$headers = 'From: <proverka_support@snpdoo.ru>' . "\r\n" .
+				    'Reply-To: <proverka_support@snpdoo.ru>' . "\r\n" .
 				    'X-Mailer: PHP/' . phpversion();
 
 				mail($to, $subject, $message, $headers);
-
-
 
 				echo "success";
 				$row->close();

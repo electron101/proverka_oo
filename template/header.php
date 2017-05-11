@@ -182,7 +182,7 @@
                 </li>                
    
 				<li>
-                    <a href="?act=gorod"><i class="fa fa-circle-o"></i> Города</a>
+                    <a href="?act=lk"><i class="fa fa-home"></i> О себе</a>
                 </li>                   
    
 				<li>
